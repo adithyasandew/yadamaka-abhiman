@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="si">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>යදමක අභිමන්</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <canvas id="c"></canvas>
+    <nav class="navbar">
+        <div class="nav-logo">houl wNsuka</div>
+        <button class="nav-burger" id="navBurger" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#"><span class="nav-scramble" data-slots='7'><span class="nch">?</span><span
+                            class="nch">?</span><span class="nch">?</span><span class="nch">?</span><span
+                            class="nch">?</span><span class="nch">?</span><span class="nch">?</span></span></a></li>
+            <li><a href="#"><span class="nav-scramble" data-slots='10'><span class="nch">?</span><span
+                            class="nch">?</span><span class="nch">?</span><span class="nch">?</span><span
+                            class="nch">?</span><span class="nch nsp"> </span><span class="nch">?</span><span
+                            class="nch">?</span><span class="nch">?</span><span class="nch">?</span></span></a></li>
+            <li><a href="#"><span class="nav-scramble" data-slots='3'><span class="nch">?</span><span
+                            class="nch">?</span><span class="nch">?</span></span></a></li>
+            <li><a href="#"><span class="nav-scramble" data-slots='6'><span class="nch">?</span><span
+                            class="nch">?</span><span class="nch">?</span><span class="nch">?</span><span
+                            class="nch">?</span><span class="nch">?</span></span></a></li>
+            <li><a href="#"><span class="nav-scramble" data-slots='8'><span class="nch">?</span><span
+                            class="nch">?</span><span class="nch">?</span><span class="nch">?</span><span
+                            class="nch">?</span><span class="nch">?</span><span class="nch">?</span><span
+                            class="nch">?</span></span></a></li>
+            <li><a href="#"><span class="nav-scramble" data-slots='4'><span class="nch">?</span><span
+                            class="nch">?</span><span class="nch">?</span><span class="nch">?</span></span></a></li>
+        </ul>
+    </nav>
+
+    <!-- ── rotating site logo ── -->
+    <div class="site-logo-wrap">
+        <img class="site-logo" src="resources/transparent.png" alt="Site Logo">
+    </div>
+
+    <div class="ui">
+        <div class="orn">
+            <div class="orn-line"></div>
+            <div class="orn-gem"></div>
+            <div class="orn-line"></div>
+        </div>
+
+        <div class="title-wrap" id="titleWrap">
+            <div class="lc" data-letter="ය" data-morse="-.-- .-">
+                <div class="morse-layer"></div>
+                <div class="scramble-layer"></div>
+                <div class="ltr">h</div>
+            </div>
+            <div class="lc" data-letter="ද" data-morse="-.. .-">
+                <div class="morse-layer"></div>
+                <div class="scramble-layer"></div>
+                <div class="ltr">o</div>
+            </div>
+            <div class="lc" data-letter="ම" data-morse="-- .-">
+                <div class="morse-layer"></div>
+                <div class="scramble-layer"></div>
+                <div class="ltr">u</div>
+            </div>
+            <div class="lc" data-letter="ක" data-morse="-.- .-">
+                <div class="morse-layer"></div>
+                <div class="scramble-layer"></div>
+                <div class="ltr">l</div>
+            </div>
+
+            <div class="word-gap"></div>
+
+            <div class="lc" data-letter="අ" data-morse=".-">
+                <div class="morse-layer"></div>
+                <div class="scramble-layer"></div>
+                <div class="ltr">w</div>
+            </div>
+            <div class="lc" data-letter="භි" data-morse="-... ..">
+                <div class="morse-layer"></div>
+                <div class="scramble-layer"></div>
+                <div class="ltr">Ns</div>
+            </div>
+            <div class="lc" data-letter="ම" data-morse="-- .-">
+                <div class="morse-layer"></div>
+                <div class="scramble-layer"></div>
+                <div class="ltr">u</div>
+            </div>
+            <div class="lc" data-letter="න්" data-morse="-.">
+                <div class="morse-layer"></div>
+                <div class="scramble-layer"></div>
+                <div class="ltr">ka</div>
+            </div>
+        </div>
+
+        <div class="orn">
+            <div class="orn-line"></div>
+            <div class="orn-gem"></div>
+            <div class="orn-line"></div>
+        </div>
+
+        <div class="tagline-wrap">
+            <div class="crt-scanline" id="crtScanline"></div>
+            <p class="tagline" id="tagline">
+                <span class="tagline-year" id="taglineYear"></span><span class="crt-cursor" id="crtCursor"></span>
+            </p>
+        </div>
+    </div>
+
+    <script src="script.js" defer></script>
+</body>
+
+</html>
