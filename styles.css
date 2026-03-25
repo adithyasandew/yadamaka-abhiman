@@ -600,7 +600,7 @@ p.tagline.crt-done {
 .site-logo-wrap {
     position: fixed;
     /* default: desktop — navbar is ~70px tall, logo sits ~100px below it */
-    top: 125px;
+    top: 115px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 10;
@@ -630,7 +630,7 @@ p.tagline.crt-done {
 /* tablet / laptop  600–1199px */
 @media (min-width: 600px) and (max-width: 1199px) {
     .site-logo-wrap {
-        top: 120px;
+        top: 100px;
     }
 
     .site-logo {
@@ -642,7 +642,7 @@ p.tagline.crt-done {
 /* mobile  ≤ 599px */
 @media (max-width: 599px) {
     .site-logo-wrap {
-        top: 145px;
+        top: 115px;
     }
 
     .site-logo {
@@ -660,5 +660,175 @@ p.tagline.crt-done {
     .site-logo {
         width: 66px;
         height: 66px;
+    }
+}
+
+/* ════════════════════════════════════
+   COUNTDOWN TIMER
+════════════════════════════════════ */
+.countdown-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(6px, 1.5vh, 14px);
+    width: 100%;
+}
+
+.countdown-event-date {
+    font-family: 'Share Tech Mono', 'Courier New', monospace;
+    font-size: clamp(0.65rem, 1.6vw, 1rem);
+    letter-spacing: 0.28em;
+    color: rgba(255, 180, 80, 0.7);
+    text-transform: uppercase;
+    text-shadow: 0 0 8px rgba(255, 100, 0, 0.5);
+}
+
+.countdown-boxes {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(6px, 1.8vw, 18px);
+    flex-wrap: nowrap;
+}
+
+.countdown-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(2px, 0.5vh, 6px);
+    min-width: clamp(52px, 12vw, 96px);
+    padding: clamp(8px, 2vw, 18px) clamp(6px, 1.5vw, 14px);
+    background: rgba(20, 8, 0, 0.55);
+    border: 1px solid rgba(255, 80, 0, 0.3);
+    border-radius: 6px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 140, 40, 0.12),
+        0 0 18px rgba(255, 50, 0, 0.12),
+        0 4px 24px rgba(0, 0, 0, 0.5);
+}
+
+.cd-num {
+    font-family: 'Source Code Pro', 'Courier New', monospace;
+    font-weight: 700;
+    font-size: clamp(1.5rem, 4.5vw, 3.4rem);
+    line-height: 1;
+    color: #ffaa44;
+    text-shadow:
+        0 0 8px #ff6600,
+        0 0 20px rgba(255, 80, 0, 0.7),
+        0 0 40px rgba(255, 30, 0, 0.3);
+    letter-spacing: 0.05em;
+    animation: cdPulse 1s ease-in-out infinite;
+}
+
+.cd-label {
+    font-family: 'Share Tech Mono', 'Courier New', monospace;
+    font-size: clamp(0.45rem, 1.1vw, 0.7rem);
+    letter-spacing: 0.22em;
+    color: rgba(255, 140, 60, 0.55);
+    text-transform: uppercase;
+}
+
+.countdown-sep {
+    font-family: 'Source Code Pro', 'Courier New', monospace;
+    font-weight: 700;
+    font-size: clamp(1.2rem, 3.5vw, 2.6rem);
+    color: rgba(255, 100, 20, 0.5);
+    text-shadow: 0 0 10px rgba(255, 60, 0, 0.4);
+    line-height: 1;
+    align-self: center;
+    margin-bottom: clamp(10px, 2.5vh, 20px);
+    animation: sepBlink 1s step-end infinite;
+}
+
+@keyframes cdPulse {
+
+    0%,
+    100% {
+        text-shadow: 0 0 8px #ff6600, 0 0 20px rgba(255, 80, 0, 0.7), 0 0 40px rgba(255, 30, 0, 0.3);
+    }
+
+    50% {
+        text-shadow: 0 0 14px #ff8800, 0 0 32px rgba(255, 120, 0, 0.9), 0 0 60px rgba(255, 50, 0, 0.5);
+    }
+}
+
+@keyframes sepBlink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.2;
+    }
+}
+
+/* countdown — tablet */
+@media (min-width: 600px) and (max-width: 1199px) {
+    .countdown-box {
+        min-width: clamp(56px, 11vw, 88px);
+    }
+}
+
+/* countdown — mobile */
+@media (max-width: 599px) {
+    .countdown-wrap {
+        margin-top: clamp(28px, 9vh, 64px);
+    }
+
+    .countdown-boxes {
+        gap: clamp(4px, 1.2vw, 10px);
+    }
+
+    .countdown-box {
+        min-width: clamp(48px, 18vw, 72px);
+        padding: 8px 6px;
+    }
+
+    .cd-num {
+        font-size: clamp(1.4rem, 7vw, 2.4rem);
+    }
+
+    .cd-label {
+        font-size: clamp(0.42rem, 1.8vw, 0.62rem);
+        letter-spacing: 0.14em;
+    }
+
+    .countdown-sep {
+        font-size: clamp(1.1rem, 5vw, 1.8rem);
+        margin-bottom: 14px;
+    }
+
+    .countdown-event-date {
+        letter-spacing: 0.18em;
+    }
+}
+
+/* countdown — very small phones */
+@media (max-width: 380px) {
+    .countdown-wrap {
+        margin-top: clamp(34px, 11vh, 76px);
+    }
+
+    .countdown-box {
+        min-width: 44px;
+        padding: 7px 4px;
+    }
+
+    .cd-num {
+        font-size: clamp(1.2rem, 8vw, 2rem);
+    }
+
+    .cd-label {
+        display: none;
+    }
+
+    .countdown-sep {
+        font-size: 1.3rem;
     }
 }
