@@ -345,3 +345,49 @@
         });
     }
 })();
+
+/* ════════════════════════════════════
+   COUNTDOWN TIMER  —  2026-03-27 19:00 (local)
+════════════════════════════════════ */
+(function () {
+    // Event: 2026-03-27 at 7:00 PM local time
+    const TARGET = new Date(2026, 2, 27, 19, 0, 0, 0); // month is 0-indexed
+
+    const elDays = document.getElementById('cdDays');
+    const elHours = document.getElementById('cdHours');
+    const elMins = document.getElementById('cdMins');
+    const elSecs = document.getElementById('cdSecs');
+    const elDate = document.getElementById('countdownDate');
+
+    function pad(n) { return String(n).padStart(2, '0'); }
+
+    function tick() {
+        const now = Date.now();
+        const diff = TARGET.getTime() - now;
+
+        if (diff <= 0) {
+            // Event has started / passed
+            elDays.textContent = '00';
+            elHours.textContent = '00';
+            elMins.textContent = '00';
+            elSecs.textContent = '00';
+            if (elDate) elDate.textContent = '★  EVENT STARTED  ★';
+            return; // stop ticking
+        }
+
+        const totalSecs = Math.floor(diff / 1000);
+        const days = Math.floor(totalSecs / 86400);
+        const hours = Math.floor((totalSecs % 86400) / 3600);
+        const mins = Math.floor((totalSecs % 3600) / 60);
+        const secs = totalSecs % 60;
+
+        elDays.textContent = pad(days);
+        elHours.textContent = pad(hours);
+        elMins.textContent = pad(mins);
+        elSecs.textContent = pad(secs);
+
+        setTimeout(tick, 1000 - (Date.now() % 1000)); // stay in sync with wall clock
+    }
+
+    tick();
+})();
