@@ -1162,7 +1162,7 @@ p.tagline.crt-done {
     max-width: min(1100px, 96vw);
 }
 
-/* optional: make the poem block stretch full width */
+
 .variety-block {
     width: 100%;
 }
