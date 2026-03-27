@@ -275,12 +275,17 @@
     function run(cells) {
         reset(cells);
         let done = 0;
-        cells.forEach((cell, i) => decode(cell, i * 260, () => {
+        // All cells decode simultaneously (delay = 0)
+        cells.forEach((cell) => decode(cell, 0, () => {
             done++;
             if (done === cells.length) {
                 setTimeout(() => {
                     bootCRT(() => {
-                        setTimeout(() => run(cells), 5400);
+                        // Apply shimmer to all revealed letters — no loop
+                        cells.forEach(c => {
+                            const ltr = c.querySelector('.ltr');
+                            if (ltr) ltr.classList.add('ltr-shimmer');
+                        });
                     });
                 }, 500);
             }
@@ -293,40 +298,47 @@
 })();
 
 /* ════════════════════════════════════
-   NAVBAR — perpetual scramble + burger
+   NAVBAR — one-time scramble → reveal + burger
 ════════════════════════════════════ */
 (function () {
-    // Only single-width ASCII — no wide block chars, no unicode multibyte
-    const G = '0123456789ABCDEFGHIJKLMNXZabcdefgh#@$%!?&*+=<>/\\|^~{}[]';
-    const rg = () => G[Math.floor(Math.random() * G.length)];
+    const HACK = [
+        '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+        'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K',
+        '#', '@', '$', '%', '!', '?', '&', '*', '+', '=',
+        '<', '>', '/', '^', '~', '|', '{', '}'
+    ];
+    const rh = () => HACK[Math.floor(Math.random() * HACK.length)];
 
-    document.querySelectorAll('.nav-scramble').forEach(el => {
-        // Get all char slot spans — skip space slots (.nsp)
-        const charSpans = [...el.querySelectorAll('.nch:not(.nsp)')];
+    document.querySelectorAll('.nav-reveal').forEach((el, idx) => {
+        const target = el.dataset.text || '';
+        const chars = [...target]; // unicode-safe split
 
-        // Give each a random timer so they flip independently
-        const timers = charSpans.map(() => Math.random() * 200);
+        // Phase 1 — fill with random chars (same count as target)
+        el.style.fontFamily = "'Share Tech Mono', monospace";
+        el.style.letterSpacing = '0.08em';
+        el.textContent = chars.map(rh).join('');
 
-        let last = performance.now();
+        // Phase 2 — scramble rapidly, then reveal final text
+        const SCRAMBLE_DURATION = 900;  // ms of scramble
+        const INTERVAL = 60;
+        const start = performance.now();
+        const delay = 200 + idx * 140;
 
-        function tick(now) {
-            const dt = now - last;
-            last = now;
-
-            charSpans.forEach((span, i) => {
-                timers[i] -= dt;
-                if (timers[i] <= 0) {
-                    span.textContent = rg();
-                    timers[i] = 60 + Math.random() * 130; // 60–190ms per flip
+        setTimeout(() => {
+            const iv = setInterval(() => {
+                const elapsed = performance.now() - start;
+                if (elapsed >= SCRAMBLE_DURATION) {
+                    clearInterval(iv);
+                    // Reveal: switch to Madu font with actual text
+                    el.style.fontFamily = "Madu, serif";
+                    el.style.letterSpacing = '0.04em';
+                    el.textContent = target;
+                    el.classList.add('nav-revealed');
+                } else {
+                    el.textContent = chars.map(rh).join('');
                 }
-            });
-
-            requestAnimationFrame(tick);
-        }
-
-        // Init with random chars immediately
-        charSpans.forEach(span => { span.textContent = rg(); });
-        requestAnimationFrame(tick);
+            }, INTERVAL);
+        }, delay);
     });
 
     // Burger toggle
@@ -344,50 +356,4 @@
             });
         });
     }
-})();
-
-/* ════════════════════════════════════
-   COUNTDOWN TIMER  —  2026-03-27 19:00 (local)
-════════════════════════════════════ */
-(function () {
-    // Event: 2026-03-27 at 7:00 PM local time
-    const TARGET = new Date(2026, 2, 27, 19, 0, 0, 0); // month is 0-indexed
-
-    const elDays = document.getElementById('cdDays');
-    const elHours = document.getElementById('cdHours');
-    const elMins = document.getElementById('cdMins');
-    const elSecs = document.getElementById('cdSecs');
-    const elDate = document.getElementById('countdownDate');
-
-    function pad(n) { return String(n).padStart(2, '0'); }
-
-    function tick() {
-        const now = Date.now();
-        const diff = TARGET.getTime() - now;
-
-        if (diff <= 0) {
-            // Event has started / passed
-            elDays.textContent = '00';
-            elHours.textContent = '00';
-            elMins.textContent = '00';
-            elSecs.textContent = '00';
-            if (elDate) elDate.textContent = '★  EVENT STARTED  ★';
-            return; // stop ticking
-        }
-
-        const totalSecs = Math.floor(diff / 1000);
-        const days = Math.floor(totalSecs / 86400);
-        const hours = Math.floor((totalSecs % 86400) / 3600);
-        const mins = Math.floor((totalSecs % 3600) / 60);
-        const secs = totalSecs % 60;
-
-        elDays.textContent = pad(days);
-        elHours.textContent = pad(hours);
-        elMins.textContent = pad(mins);
-        elSecs.textContent = pad(secs);
-
-        setTimeout(tick, 1000 - (Date.now() % 1000)); // stay in sync with wall clock
-    }
-
-    tick();
 })();
